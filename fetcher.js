@@ -20,7 +20,7 @@ const goWriteItDown = (localPath, data) => fs.writeFile(localPath, data, (err) =
   console.log("WE GOT IT");
 });
  
-goGetTheThing(url, localPath)
+goGetTheThing(url, localPath, goWriteItDown)
 
 // use process.argv to get domain and local file path
 // supply domain to request function
