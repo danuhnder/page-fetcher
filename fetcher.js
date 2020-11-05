@@ -1,5 +1,6 @@
 const request = require('request');
 const fs = require('fs');
+const path = require('path');
 
 const url = process.argv[2];
 const localPath = process.argv[3];
@@ -19,16 +20,23 @@ const goGetTheThing = function(url, localPath, done) {
 };
 
 const goWriteItDown = (localPath, data) => {
-  if (fs.existsSync(localPath)) {
-    console.log('file already exists buddy!')
-  } else {
-    fs.writeFile(localPath, data, (err) => {
-      if(err) {
-      throw err;
-      }
-      console.log("WROTE IT DOWN");
-    });  
-  }
+  fs.access(path.dirname(localPath), (path) => {
+    if(!path) {
+      fs.writeFile(localPath, data, (err) => {
+        if(err) {
+        throw err;
+        }
+        console.log("WROTE IT DOWN");
+      })  
+    } else {
+      console.log('you can\'t get there from here')
+    }
+  })
+  
+  // if (fs.existsSync(localPath)) {
+  //   console.log('file already exists buddy!')
+  // } else {
+  
 };
  
 goGetTheThing(url, localPath, goWriteItDown)
